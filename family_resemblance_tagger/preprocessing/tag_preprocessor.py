@@ -27,6 +27,7 @@ def ingest_request_handler(item):
 
         return item
     else:
+        lgr.warning("Ingest processor found no text.", object=item)
         return None
 
 
@@ -35,8 +36,7 @@ def ingest_consumer_callback(item):
         lgr.report("ptags added", item)
         data[item["checksum"]] = item
         database.save_data(data.copy())
-    else:
-        lgr.warning("Ingest processor returned no results")
+    
 
 
 def check_redundancy(item):

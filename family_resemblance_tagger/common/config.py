@@ -36,7 +36,7 @@ dict = {
 
 	## flow_demand: how many keywords should each document contribute to the group
 	## This affects, but does not define, the number of keywords for each group.
-	"flow_demand" : 4,
+	"flow_demand" : 2,
 
 	## 'cost_alpha' is a parameter that tunes the cost function in the max flow problem.
 	### In general, a higher value yields tags that are more unique and diverse.
@@ -57,7 +57,7 @@ dict = {
 	## A higher threshold produces a large number of small, homogeneous communities.
 	## A lower threshold produces a small number of relatively heterogenous communities.
 	## Suggested range is between 0.1 and 0.5; required range is between 0.0 and 1.0. 
-	"cd_sim_thresh" : 0.35,
+	"cd_sim_thresh" : 0.25,
 
 	## When assigning tags to the filesystem, use this prefix on each tag.
 	## This separates the tags from any pre-existing or manually assigned tags.

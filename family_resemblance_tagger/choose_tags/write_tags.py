@@ -43,7 +43,7 @@ def macos_write(data):
 
 		preexisting_tagstring = subprocess.run(get_tags_command, stdout=subprocess.PIPE).stdout.decode('utf-8')
 
-		preexisting_tags = list(map(lambda t: t.strip(), preexisting_tagstring[1:-1].split(",")))
+		preexisting_tags = list(map(lambda t: t.strip(' /"'), preexisting_tagstring[1:-1].split(",")))
 		
 		reserved_tags = list(filter(lambda t: not t.startswith(config.dict["tag_prefix"]), preexisting_tags))
 		
