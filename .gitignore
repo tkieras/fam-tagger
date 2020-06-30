@@ -1,0 +1,18 @@
+*.pyc
+*.pyo
+__pycache__/
+*.DS_Store
+
+# Setuptools distribution directory.
+/dist/
+
+# Python egg metadata, regenerated from source files by setuptools.
+/*.egg-info
+
+
+family_resemblance_tagger/data/*
+family_resemblance_tagger/diagnostics/*
+family_resemblance_tagger/preprocessing/extract_keywords/resources/corpora/
+issues.txt
+design_notes.txt
+TaggerQueue.workflow
