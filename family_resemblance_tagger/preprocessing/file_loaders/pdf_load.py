@@ -1,7 +1,4 @@
-test_path = "/home/tim/Documents/projects/family_resemblance_tagger/family_resemblance_tagger/test/file_loader_tests/test_A.pdf"
-
 import pdftotext
-
 
 def load(path):
     with open(path, "rb") as f:
@@ -16,6 +13,3 @@ def load(path):
 
 
     return text
-
-if __name__=="__main__":
-    print(load(test_path))

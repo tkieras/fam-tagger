@@ -1,5 +1,3 @@
-test_path = "tests/test_A.epub"
-
 from ebooklib import epub
 import ebooklib
 from bs4 import BeautifulSoup
@@ -18,7 +16,4 @@ def load(path):
         extracted_text.append(html_to_text.get_text(" ", strip=True))
 
     return " ".join(extracted_text)
-
-if __name__=="__main__":
-    print(load(test_path))
 

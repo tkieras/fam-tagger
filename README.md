@@ -4,6 +4,12 @@ Assigns a set of tags to document communities that loosely captures what the doc
 
 ## Installation
 
+
+### Dependencies
+
+```
+pip install nltk matplotlib tabulate bs4 ebooklib pdftotext networkx
+
 ```
 git clone https://github.com/tkieras/fam-tagger
 ```
@@ -41,7 +47,6 @@ Step by step usage:
   - `python preprocessing/queue_for_tags.py <path/to/folder/>*.pdf`
   - Currently suported filetypes are:
 	- pdf
-	- docx
 	- txt
 	- epub
   - If you add a file that has already been preprocessed, the server will skip preprocessing it again.

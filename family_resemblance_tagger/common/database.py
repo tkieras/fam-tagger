@@ -18,7 +18,7 @@ def load_data():
 	return data
 
 def save_data(data):
-	with open(datapath, "w") as d:
+	with open(datapath, "w+") as d:
 		json.dump(data, d)
 
 

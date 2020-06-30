@@ -2,6 +2,7 @@ from family_resemblance_tagger.common import logger, database, config
 import file_loaders
 from pydoc import locate
 from multiprocessing import Pool, connection, Manager
+import multiprocessing
 import datetime
 
 from extract_keywords import extract_keywords
@@ -80,6 +81,8 @@ def main():
 
 
 if __name__=="__main__":
+
+    multiprocessing.set_start_method('spawn')
     conf = config.dict
     addr = (conf["preprocess_server_addr"], conf["preprocess_server_port"])
 

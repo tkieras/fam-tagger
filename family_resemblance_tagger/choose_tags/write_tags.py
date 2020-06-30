@@ -41,7 +41,7 @@ def macos_write(data):
 
 		get_tags_command = ['mdls', '-raw', '-name', 'kMDItemUserTags', path]
 
-		preexisting_tagstring = subprocess.run(get_tags_command, stdout=subprocess.PIPE), stdout.decode('utf-8')
+		preexisting_tagstring = subprocess.run(get_tags_command, stdout=subprocess.PIPE).stdout.decode('utf-8')
 
 		preexisting_tags = list(map(lambda t: t.strip(), preexisting_tagstring[1:-1].split(",")))
 		
@@ -67,7 +67,7 @@ def macos_write(data):
 
 
 		tag_command = ['xattr', '-w', 'com.apple.metadata:_kMDItemUserTags', xml_string, path]
-		subprocess.run(tag_command, stdout=subprocess.PIPE),stdout.decode('utf-8')
+		subprocess.run(tag_command, stdout=subprocess.PIPE).stdout.decode('utf-8')
 
 
 
