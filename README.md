@@ -5,15 +5,20 @@ Assigns a set of tags to document communities that loosely captures what the doc
 ## Installation
 
 
-### Dependencies
+1. Install Dependencies
 
 ```
 pip install nltk matplotlib tabulate bs4 ebooklib pdftotext networkx
 
 ```
+
+2. Clone Git Repository
+```
 git clone https://github.com/tkieras/fam-tagger
 ```
 
+
+3. Set PYTHONPATH
 Before running any command described below, make sure that the environment variable PYTHONPATH is set properly in your shell. It must include the path to the downloaded directory 'fam-tagger'.
 
 
