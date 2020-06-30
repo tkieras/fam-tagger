@@ -23,43 +23,45 @@ For the time being, this step must be repeated for each shell session, or includ
 ## Usage
 
 As an overview, there are three components to use in the following order:
-	(1) A server process that conducts preprocessing.
-	(2) A short script that adds documents to be preprocessed.
-	(3) The main application that chooses and assigns tags to the documents that have been preprocessed.
+
+1. A server process that conducts preprocessing.
+2. A short script that adds documents to be preprocessed.
+3. The main application that chooses and assigns tags to the documents that have been preprocessed.
 
 Step by step usage:
-	(0) Navigate to the directory `fam-tagger/family_resemblance_tagger`
-	(1) Start the preprocessing server with:
-		`python preprocessing/tag_preprocessor.py`
-		- The output of this process includes logs and notifications, but no further action is required on this process.
-		- To exit the process, use `Ctrl-c`
-	(2) While the preprocessing server is running, add the files you want to be tagged with:
-		`python preprocessing/queue_for_tags.py <path/to/file>`
-		- You can add multiple files by using wildcard expansion:
-		`python preprocessing/queue_for_tags.py <path/to/folder/>*.pdf`
-		- Currently suported filetypes are:
-			- pdf
-			- docx
-			- txt
-			- epub
-		- If you add a file that has already been preprocessed, the server will skip preprocessing it again.
-	(3) At any point, you may execute the main application and choose tags. All documents that have been preprocessed will be given tags. There are a few options for how to run the main application:
-		- To run the main application and preview the results without making changes to the file system:
-			`choose_tags/main.py --report`
-		- To run the main application and write the tags to the filesystem:
-			`choose_tags/main.py --write`
-		- To run the main application, view the results and write them to the filesystem:
-			`choose_tags/main.py --report --write`
-	(4) (Optional step) To remove any and all assigned tags that resulted from running the above step (3), run:
-		`choose_tags/main.py --remove`
-		- This step is only needed if you wish to cleanup bad results or otherwise remove traces of the tags assigned with step (3). It is like an 'undo' command for step (3).
-		- By default, when running `choose_tags/main.py` with the `--write` flag set, the application will preserve user defined tags and ensure that the most up-to-date tags are set in the filesystem.
-		- If you wish, you may run `choose_tags/main.py --remove --write`, but the removal step here is redundant.
+
+0. Navigate to the directory `fam-tagger/family_resemblance_tagger`
+1. Start the preprocessing server with:
+  - `python preprocessing/tag_preprocessor.py`
+  - The output of this process includes logs and notifications, but no further action is required on this process.
+  - To exit the process, use `Ctrl-c`
+2. While the preprocessing server is running, add the files you want to be tagged with:
+  - `python preprocessing/queue_for_tags.py <path/to/file>`
+  - You can add multiple files by using wildcard expansion:
+  - `python preprocessing/queue_for_tags.py <path/to/folder/>*.pdf`
+  - Currently suported filetypes are:
+	- pdf
+	- docx
+	- txt
+	- epub
+  - If you add a file that has already been preprocessed, the server will skip preprocessing it again.
+3. At any point, you may execute the main application and choose tags. All documents that have been preprocessed will be given tags. There are a few options for how to run the main application:
+  - To run the main application and preview the results without making changes to the file system:
+  - `choose_tags/main.py --report`
+  - To run the main application and write the tags to the filesystem:
+  - `choose_tags/main.py --write`
+  - To run the main application, view the results and write them to the filesystem:
+  - `choose_tags/main.py --report --write`
+4. (Optional step) To remove any and all assigned tags that resulted from running the above step (3), run:
+  - `choose_tags/main.py --remove`
+  - This step is only needed if you wish to cleanup bad results or otherwise remove traces of the tags assigned with step (3). It is like an 'undo' command for step (3). 
+  - By default, when running `choose_tags/main.py` with the `--write` flag set, the application will preserve user defined tags and ensure that the most up-to-date tags are set in the filesystem.
+  - If you wish, you may run `choose_tags/main.py --remove --write`, but the removal step here is redundant.
 
 ## Configuration
 
 Configuration is controlled by a file 'config.py' located in:
-	`common/config.py`
+  - `common/config.py`
 
 The comments in the config file explain the various configuration options. No initial configuration is required.
 
@@ -67,9 +69,10 @@ The comments in the config file explain the various configuration options. No in
 ## Algorithm Description
 
 The process used here has several steps:
- (1) Preprocess the document contents to extract a small set of possible keywords.
- (2) Detect communities in the document set, where a user-defined threshold is used to indicate the similarity required for two documents to be adjacent.
- (3) For each detected community, assign a set of tags that represents the community. The tags are found by solving a max flow problem. Depending on user-defined parameters, the resulting tags will skew towards representing the commonalities, or toward representing the diversity of keywords found in the documents.
+
+1. Preprocess the document contents to extract a small set of possible keywords.
+2. Detect communities in the document set, where a user-defined threshold is used to indicate the similarity required for two documents to be adjacent.
+3. For each detected community, assign a set of tags that represents the community. The tags are found by solving a max flow problem. Depending on user-defined parameters, the resulting tags will skew towards representing the commonalities, or toward representing the diversity of keywords found in the documents.
 
 ## Caveats
 
@@ -82,5 +85,5 @@ The inspiration for the algorithm comes from Wittgenstein's theory of family res
 
 ## TODO:
 
-	-diagnostics
-	-experiment with hierarchical community detection, and/or using multiple thresholds
+- diagnostics
+- experiment with hierarchical community detection, and/or using multiple thresholds

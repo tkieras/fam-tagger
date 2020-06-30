@@ -13,7 +13,10 @@ def linux_write(data):
 		
 		reserved_tags = list(filter(lambda t: not t.startswith(config.dict["tag_prefix"]), preexisting_tags))
 		
-		prefixed_tags = list(map(lambda t: config.dict["tag_prefix"] + t, value["atags"]))
+		if value["atags"] is None:
+			prefixed_tags = []
+		else:
+			prefixed_tags = list(map(lambda t: config.dict["tag_prefix"] + t, value["atags"]))
 
 		if not reserved_tags:
 			all_tags = prefixed_tags
@@ -44,7 +47,10 @@ def macos_write(data):
 		
 		reserved_tags = list(filter(lambda t: not t.startswith(config.dict["tag_prefix"]), preexisting_tags))
 		
-		prefixed_tags = list(map(lambda t: config.dict["tag_prefix"] + t, value["atags"]))
+		if value["atags"] is None:
+			prefixed_tags = []
+		else:
+			prefixed_tags = list(map(lambda t: config.dict["tag_prefix"] + t, value["atags"]))
 
 		if not reserved_tags:
 			all_tags = prefixed_tags
@@ -65,6 +71,9 @@ def macos_write(data):
 
 
 
+
+
+
 def write_tags(data):
 	if platform.system() == "Linux":
 		linux_write(data)
@@ -72,6 +81,12 @@ def write_tags(data):
 		macos_write(data)
 	elif platform.system() == "Windows":
 		pass
+
+def remove_tags(data):
+	for key, value in data.items():
+		value["atags"] = None
+
+	write_tags(data)
 
 
 

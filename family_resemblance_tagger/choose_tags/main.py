@@ -27,6 +27,9 @@ def main():
             print("Assigned Tags:\n\t{}".format(atags))
             print("-"*48)
 
+    if args.remove:
+        write_tags.remove_tags(data)
+
     if args.write:
         lgr.report("Writing tags to filesystem...")
         write_tags.write_tags(data)
@@ -41,6 +44,7 @@ if __name__=="__main__":
     parser = argparse.ArgumentParser("Assign tags based on previously extracted potential tags in database.")
     parser.add_argument("--report", "-r", action='store_true', default=False, help="Report the tags that will be assigned. If used without 'write', no changes will be made to filesystem tags.")
     parser.add_argument("--write", "-w", action='store_true', default=False, help="Write tags to file system.")
+    parser.add_argument("--remove", action='store_true', default=False, help="Remove all tags assigned by this application.")
     args = parser.parse_args()
     conf = config.dict
     main()
