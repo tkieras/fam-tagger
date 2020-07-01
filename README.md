@@ -12,6 +12,9 @@ pip install nltk matplotlib tabulate bs4 ebooklib pdftotext networkx
 
 ```
 
+Note: `pdftotext` requires poppler as a dependency, which can be installed using your platform's package manager.
+
+
 2. Clone Git Repository
 ```
 git clone https://github.com/tkieras/fam-tagger
@@ -25,7 +28,7 @@ Before running any command described below, make sure that the environment varia
 For example, after executing `git clone` as above,
 ```
 cd fam-tagger
-export PYTHONPATH=PYTHONPATH:$(pwd)
+export PYTHONPATH=$PYTHONPATH:$(pwd)
 ```
 
 For the time being, this step must be repeated for each shell session, or included in a .bashrc / .bash_profile file.
@@ -46,7 +49,9 @@ Step by step usage:
   - `python preprocessing/tag_preprocessor.py`
   - The output of this process includes logs and notifications, but no further action is required on this process.
   - To exit the process, use `Ctrl-c`
-2. While the preprocessing server is running, add the files you want to be tagged with:
+2. While the preprocessing server is running, start another shell session.
+  - set the environment variable PYTHONPATH as above.
+  - add the files you want to be tagged with:
   - `python preprocessing/queue_for_tags.py <path/to/file>`
   - You can add multiple files by using wildcard expansion:
   - `python preprocessing/queue_for_tags.py <path/to/folder/>*.pdf`
@@ -68,12 +73,15 @@ Step by step usage:
   - By default, when running `choose_tags/main.py` with the `--write` flag set, the application will preserve user defined tags and ensure that the most up-to-date tags are set in the filesystem.
   - If you wish, you may run `choose_tags/main.py --remove --write`, but the removal step here is redundant.
 
+
 ## Configuration
 
 Configuration is controlled by a file 'config.py' located in:
   - `common/config.py`
 
 The comments in the config file explain the various configuration options. No initial configuration is required.
+
+If after changing the configuration you wish to re-preprocess the files with the updated preprocessing configuration, currently this is not supported. To achieve the same result you will need to delete the file `data/database.json`, restart the `tag_preprocessor` and then proceed to `queue_for_tags` your files again. 
 
 
 ## Algorithm Description
