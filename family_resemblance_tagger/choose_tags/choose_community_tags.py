@@ -31,11 +31,11 @@ def init_flow_problem(working_group, flow_demand):
     if not config.dict["flow_constraint_full_coverage"]:
         G.add_node(sink, demand=(flow_demand*n))
 
-    ptag_counts = {}
-    ptag_weights = {}
+    keyword_counts = {}
+    keyword_weights = {}
    
     filepath_sink = []
-    source_ptag = []
+    source_keyword = []
 
     for key, value in working_group.items():
         if not config.dict["flow_constraint_full_coverage"]:
@@ -45,17 +45,17 @@ def init_flow_problem(working_group, flow_demand):
         G.add_node(key, demand=using_demand) ## force each filepath node to contribute something
         filepath_sink.append((key, sink))
 
-        for index, ptag in enumerate(value["ptags"].keys()):
-            ptag_counts[ptag] = ptag_counts.get(ptag, 0) + 1
-            ptag_weights[ptag] = ptag_weights.get(ptag, 0) + value["ptags"][ptag]
-            G.add_edge(ptag, key, capacity=1)
-            source_ptag.append((source, ptag))
+        for index, keyword in enumerate(value["keywords"].keys()):
+            keyword_counts[keyword] = keyword_counts.get(keyword, 0) + 1
+            keyword_weights[keyword] = keyword_weights.get(keyword, 0) + value["keywords"][keyword]
+            G.add_edge(keyword, key, capacity=1)
+            source_keyword.append((source, keyword))
 
     G.add_edges_from(filepath_sink)
 
-    for edge in source_ptag:
-        G.add_edge(edge[0], edge[1], weight=cost(ptag_counts[edge[1]], ptag_weights[edge[1]]))
-       # print("cost is {} for ptag: {}".format(cost(ptag_counts[edge[1]], ptag_weights[edge[1]]), edge[1]))
+    for edge in source_keyword:
+        G.add_edge(edge[0], edge[1], weight=cost(keyword_counts[edge[1]], keyword_weights[edge[1]]))
+       # print("cost is {} for keyword: {}".format(cost(keyword_counts[edge[1]], keyword_weights[edge[1]]), edge[1]))
     
     
     return G
@@ -67,23 +67,23 @@ def solve_flow_problem(G):
     return flow_results
 
 
-def extract_atags(flow_results):
-    atags = []
+def extract_tags(flow_results):
+    tags = []
     for src, value in flow_results.items():
         for dst, flow in value.items():
             if src == "Source" and flow > 0:
-                atags.append(dst)
-    return sorted(atags)
+                tags.append(dst)
+    return sorted(tags)
 
 
 
-def choose_atags(comm, data, flow_demand=1):
+def choose_community_tags(comm, data, flow_demand=1):
     wg = pull_working_group(data, comm)
 
     flow_problem = init_flow_problem(wg, flow_demand)
     flow_results = solve_flow_problem(flow_problem)
-    atags = extract_atags(flow_results)
-    return atags
+    tags = extract_tags(flow_results)
+    return tags
 
 
 
@@ -92,8 +92,8 @@ def main():
 
     flow_problem = init_flow_problem(data, 2)
     flow_results = solve_flow_problem(flow_problem)
-    atags = extract_atags(flow_results)
-    print(atags)
+    tags = extract_tags(flow_results)
+    print(tags)
 
 
 

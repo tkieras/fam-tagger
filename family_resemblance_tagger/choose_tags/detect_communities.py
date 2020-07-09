@@ -31,7 +31,7 @@ def init_base_network(wg):
         for j in wg.keys():
             if i != j:
                 G.add_edge(wg[i]["checksum"], wg[j]["checksum"], 
-                    weight=similarity(wg[i]["ptags"], wg[j]["ptags"]))
+                    weight=similarity(wg[i]["keywords"], wg[j]["keywords"]))
 
     return G
 
@@ -67,12 +67,12 @@ def x_subgraph(G, threshold):
 #     n = len(wg)
 
 #     for i in range(n):
-#         for j in range(len(wg[i]["ptags"])):
-#             G.add_edge(wg[i]["filepath"], wg[i]["ptags"][j])
+#         for j in range(len(wg[i]["keywords"])):
+#             G.add_edge(wg[i]["filepath"], wg[i]["keywords"][j])
 #         for j in range(n):
 #             if(i != j):
 #                 G.add_edge(wg[i]["filepath"], wg[j]["filepath"], 
-#                     weight=similarity(wg[i]["ptags"], wg[j]["ptags"]))
+#                     weight=similarity(wg[i]["keywords"], wg[j]["keywords"]))
 
 #     return G
 

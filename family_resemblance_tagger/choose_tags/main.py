@@ -1,30 +1,30 @@
 from family_resemblance_tagger.common import logger, database, config
-import detect_communities, choose_atags, write_tags
+import detect_communities, choose_community_tags, write_tags
 import argparse
 
 
 
 def main():
-    data = database.load_data()
+    data = database.load_all_data()
 
     comms = detect_communities.detect_communities(data, sim_thresh=conf["cd_sim_thresh"])
 
 
     for comm in comms:
-        atags = choose_atags.choose_atags(comm, data, flow_demand=conf["flow_demand"])
+        tags = choose_community_tags.choose_community_tags(comm, data, flow_demand=conf["flow_demand"])
 
         for checksum in comm:
-            if "atags" in data[checksum].keys():
-                data[checksum][atags].append(atags)
+            if data[checksum]["tags"] is not None:
+                data[checksum]["tags"].append(tags)
             else:
-                data[checksum]["atags"] = atags
+                data[checksum]["tags"] = tags
             
         if args.report:
             print("For community of {} document(s):".format(len(comm)))
             for checksum in comm:
                 print("\t{}".format(data[checksum]["filepath"]))
 
-            print("Assigned Tags:\n\t{}".format(atags))
+            print("Assigned Tags:\n\t{}".format(tags))
             print("-"*48)
 
     if args.remove:

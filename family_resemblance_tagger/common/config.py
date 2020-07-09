@@ -5,7 +5,7 @@ dict = {
 	"preprocess_server_authkey" : b"server-authkey",
 
 	# The number of threads that the preprocessor server should use.
-	"preprocess_server_max_threads" : 2,
+	"preprocess_server_max_threads" : 4,
 
 
 	# The following are used by the preprocessor and affect how keywords are extracted from the raw text of a file
