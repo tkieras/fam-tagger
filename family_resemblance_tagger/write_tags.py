@@ -1,8 +1,7 @@
 import platform
 import subprocess
-from family_resemblance_tagger.common import config
 
-def linux_write(data):
+def linux_write(data, config):
 	for key, value in data.items():
 		path = value["filepath"]
 		
@@ -11,12 +10,12 @@ def linux_write(data):
 
 		preexisting_tags = list(map(lambda t: t.strip(), preexisting_tagstring.split(",")))
 		
-		reserved_tags = list(filter(lambda t: not t.startswith(config.dict["tag_prefix"]), preexisting_tags))
+		reserved_tags = list(filter(lambda t: not t.startswith(config["tag_prefix"]), preexisting_tags))
 		
 		if value["tags"] is None:
 			prefixed_tags = []
 		else:
-			prefixed_tags = list(map(lambda t: config.dict["tag_prefix"] + t, value["tags"]))
+			prefixed_tags = list(map(lambda t: config["tag_prefix"] + t, value["tags"]))
 
 		if not reserved_tags:
 			all_tags = prefixed_tags
@@ -28,7 +27,7 @@ def linux_write(data):
 		subprocess.run(['setfattr', '-n', 'user.tags', '-v', tagstring, path], 
 			stdout=subprocess.PIPE).stdout.decode('utf-8')
 
-def macos_write(data):
+def macos_write(data, config):
 
 	xml_template_start = '<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd"><plist version="1.0"><array>'
 	xml_template_tagstart = '<string>'
@@ -45,12 +44,12 @@ def macos_write(data):
 
 		preexisting_tags = list(map(lambda t: t.strip(' /"'), preexisting_tagstring[1:-1].split(",")))
 		
-		reserved_tags = list(filter(lambda t: not t.startswith(config.dict["tag_prefix"]), preexisting_tags))
+		reserved_tags = list(filter(lambda t: not t.startswith(config["tag_prefix"]), preexisting_tags))
 		
 		if value["tags"] is None:
 			prefixed_tags = []
 		else:
-			prefixed_tags = list(map(lambda t: config.dict["tag_prefix"] + t, value["tags"]))
+			prefixed_tags = list(map(lambda t: config["tag_prefix"] + t, value["tags"]))
 
 		if not reserved_tags:
 			all_tags = prefixed_tags
@@ -70,10 +69,6 @@ def macos_write(data):
 		subprocess.run(tag_command, stdout=subprocess.PIPE).stdout.decode('utf-8')
 
 
-
-
-
-
 def write_tags(data):
 	if platform.system() == "Linux":
 		linux_write(data)
@@ -87,6 +82,4 @@ def remove_tags(data):
 		value["tags"] = None
 
 	write_tags(data)
-
-
 

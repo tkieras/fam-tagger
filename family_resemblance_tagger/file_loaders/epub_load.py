@@ -2,7 +2,6 @@ from ebooklib import epub
 import ebooklib
 from bs4 import BeautifulSoup
 
-
 def load(path):
     try:
         book = epub.read_epub(path)
@@ -16,4 +15,3 @@ def load(path):
         extracted_text.append(html_to_text.get_text(" ", strip=True))
 
     return " ".join(extracted_text)
-

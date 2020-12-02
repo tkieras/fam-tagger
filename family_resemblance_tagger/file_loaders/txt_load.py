@@ -6,6 +6,4 @@ def load(filepath):
             text = text.strip()
         except UnicodeDecodeError:
             text = None
-
-    
     return text
